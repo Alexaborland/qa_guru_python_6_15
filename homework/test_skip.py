@@ -6,13 +6,16 @@ import pytest
 from selene import browser, have
 from selene.support.shared import browser, config
 
+def desktop(width):
+    return width >= 1024
+
 
 @pytest.fixture(params=[(1920, 1080), (2560, 1440), (360, 480), (480, 800)],
                 ids=['1920 * 1080', '2560 * 1440', '360 * 480', '480 * 800'])
 def browser_size(request):
     browser.config.window_width = request.param[0]
     browser.config.window_height = request.param[1]
-    pass
+
 
 def test_github_desktop(browser_size):
     if browser.config.window_width < 1024:
@@ -20,8 +23,6 @@ def test_github_desktop(browser_size):
     browser.open('https://github.com/')
     browser.element('.HeaderMenu-link--sign-in').click()
     browser.element('.auth-form-header').should(have.exact_text('Sign in to GitHub'))
-
-    pass
 
 
 def test_github_mobile(browser_size):
