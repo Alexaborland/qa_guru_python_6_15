@@ -1,2 +1,1 @@
-# qa_guru_python_6_15
-
+Homework with applying Pytest
